@@ -15,7 +15,7 @@ frontend/myapp/coverage
 
 frontend/myapp/build
 
-
+frontend/myapp/.eslintcache
 frontend/myapp/DS_Store
 frontend/myapp/env.local
 frontend/myapp/env.development.local
