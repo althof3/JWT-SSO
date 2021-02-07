@@ -63,10 +63,8 @@ class ProfileDashboardView(RetrieveAPIView):
         user_data = Profile.objects.get(user=request.user)
         # status_code = status.HTTP_200_OK
         serializer = ProfileSerializer(user_data)
-        response = {
-            'data': serializer.data
-        }
-        return Response(response, status=status.HTTP_200_OK)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class UserProfileUserView(RetrieveAPIView):  # pragma: no cover

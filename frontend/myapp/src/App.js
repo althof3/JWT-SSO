@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  const [username, setusername] = useState("");
+
   const [logged_in, set_logged_in] = useState(false);
+  const [user, setUser] = useState({})
 
 
   let DJANGO_SSO_LOGIN_URL = "http://127.0.0.1:8000/sso/login/?next=/sso/halo";
@@ -11,7 +12,7 @@ function App() {
   
 
   useEffect(() => {
-    if (logged_in) {
+    if (localStorage.getItem("token")) {
       fetch("http://127.0.0.1:8000/sso/profile/", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -19,8 +20,7 @@ function App() {
       })
         .then((res) => res.json())
         .then((json) => {
-          console.log(json);
-          setusername(json.data.name);
+          setUser(json)
         });
     } 
   }, [logged_in]);
@@ -32,7 +32,7 @@ function App() {
   const receiveToken = (event) => {
     window.removeEventListener('message', ()=>null, false);
     
-    if (typeof(event.data) !== 'string') return;
+    if (event.origin !== 'http://127.0.0.1:8000') return;
 
     localStorage.setItem('token', event.data);
     set_logged_in(true)
@@ -41,7 +41,7 @@ function App() {
 
   const handle_logout = () => {
     localStorage.removeItem("token");
-    setusername("");
+    setUser({});
     set_logged_in(false);
   };
 
@@ -69,7 +69,8 @@ function App() {
         </li>
       </ul>
 
-      <h1>{username}</h1>
+      <h1>{user.name}</h1>
+      <h4>{user.role}</h4>
     </div>
   );
 }
