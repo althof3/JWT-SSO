@@ -62,32 +62,3 @@ class UserLoginSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 'User with given email and password does not exists'
             )
-
-# class SupervisorLembagaRegistrationSerializer(serializers.ModelSerializer):
-#     """Serializer json field for registration."""
-
-#     # profile = LembagaProfileSerializer(required=False)
-
-#     class Meta:
-#         model = User
-#         fields = ['username', 'full_name', 'email', 'password', 'profile']
-#         extra_kwargs = {'password': {'write_only': True}}
-
-
-#     def create(self, validated_data):  # pragma: no cover
-#         profile_data = validated_data.pop('profile')
-#         try:
-#             lembaga = Lembaga.objects.get(nama=profile_data['lembaga'])
-#             user = User.objects.create_user(**validated_data)
-#             user.role = Role.SLB.value
-#             user.save()
-#             SupervisorLembaga.objects.create(
-#                 user=user,
-#                 lembaga=lembaga,
-#                 jabatan=profile_data['jabatan']
-#             )
-#             return user
-#         except Lembaga.DoesNotExist:
-#             raise serializers.ValidationError(
-#                 'Lembaga tidak ditemukan'
-#             )
