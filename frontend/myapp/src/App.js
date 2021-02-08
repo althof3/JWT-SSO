@@ -44,6 +44,7 @@ function App() {
 
   const handle_logout = () => {
     localStorage.removeItem("token");
+    // "dcdcdce"
   };
 
   const handleLogin = () => {
